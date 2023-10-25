@@ -1,0 +1,142 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --rotation-animation-time: 7s;
+    --float-animation-time: 15s;
+    --even-column-offset-time: 2.70s;
+    /* --even-column-offset-time: 0s; */
+}
+
+body {
+    background-color: #333;
+    overflow: hidden;
+    height: 100%;
+}
+
+.container {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-area {
+    width: 90vw;
+    height: 95vh;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    place-items: center;
+    gap: 3em;
+}
+
+i {
+    position: relative;
+    font-size: 7em;
+}
+
+/* backup values */
+/* i:nth-child(1) {
+    top: 69vh;
+}
+
+i:nth-child(6) {
+    top: 34vh;
+}
+
+i:nth-child(12) {
+    top: 0vh;
+} 
+*/
+
+
+/* https://css-tricks.com/nth-child-between-two-fixed-indexes/ */
+/* choosing the rows of the grid */
+
+i:nth-child(-n + 5) {
+    /* border: solid orange 2px; */
+    top: 70vh;
+
+    animation: 
+    /* rotateAnticlockwise var(--rotation-animation-time) linear infinite, */
+    floatUp var(--float-animation-time) linear infinite;
+}
+
+i:nth-child(-n + 5):nth-child(2n) {
+    /* border: purple solid 3px; */
+    opacity: 0;
+
+    animation-delay: var(--even-column-offset-time);
+}
+
+
+i:nth-child(n + 6):nth-child(-n + 10) {
+    /* border: solid blue 3px; */
+    opacity: 0;
+    
+    top: 36vh;
+    
+    animation: floatUp var(--float-animation-time) linear infinite;
+    animation-delay: 5s;
+}
+
+i:nth-child(n + 6):nth-child(-n + 10):nth-child(2n + 1) {
+    /* border: purple solid 3px; */
+    animation-delay: calc(5s + var(--even-column-offset-time));
+}
+
+
+i:nth-child(n + 11) {
+    /* border: solid yellow 2px; */
+    opacity: 0;
+
+    top: 2vh;
+
+    animation: floatUp var(--float-animation-time) linear infinite;
+    animation-delay: 10s;
+}
+
+i:nth-child(n + 11):nth-child(2n) {
+    /* border: purple solid 3px; */
+    animation-delay: calc(10s + var(--even-column-offset-time));
+}
+
+
+/* rotating even elements anticlockwise, odd elements clockwise */
+
+/* i:nth-child(2n) {
+    animation: 
+    rotateAnticlockwise var(--rotation-animation-time) linear infinite;
+} */
+
+/* i:nth-child(2n+1) {
+    animation: 
+    rotateClockwise var(--rotation-animation-time) linear infinite;
+} */
+
+
+
+@keyframes rotateClockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes rotateAnticlockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+}
+
+@keyframes floatUp {
+    from {
+        opacity: 0;
+    }
+    25% { opacity: 1; }
+    70% { opacity: 1; }
+    to {
+        opacity: 0;
+        transform: translateY(-470px);
+    }
+    
+}
+
